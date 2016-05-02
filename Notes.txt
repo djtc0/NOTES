@@ -1,3 +1,13 @@
 Nice hofmannsven simply Git Cheatsheet
 
 https://gist.github.com/hofmannsven/6814451
+
+Local/Auto Histotry for visual studio:
+
+	Local History for Visual Studio:
+		https://visualstudiogallery.msdn.microsoft.com/226c2108-9da9-407d-b90d-9783040d27b8
+		https://localhistory.codeplex.com/SourceControl/latest#README.md
+
+	AutoHistory  Microsoft DevLabs: 
+		https://visualstudiogallery.msdn.microsoft.com/dfcb2438-180c-4f8a-983b-62d89e141fe3
+
