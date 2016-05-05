@@ -25,3 +25,6 @@ git ls-remote (branches and commits and relations)
 
 git remote show origin (somemore info check it out...)
 git ls-remote --heads origin (check it out)
+
+
+_______________
