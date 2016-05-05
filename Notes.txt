@@ -11,3 +11,6 @@ Local/Auto Histotry for visual studio:
 	AutoHistory  Microsoft DevLabs: 
 		https://visualstudiogallery.msdn.microsoft.com/dfcb2438-180c-4f8a-983b-62d89e141fe3
 
+!!! Super Tips:
+http://mislav.net/2010/07/git-tips/
+

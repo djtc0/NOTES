@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+  <head profile="http://gmpg.org/xfn/11">
+    <link href="/feeds/dev.xml" rel="alternate" title="Mislav's blog" type="application/atom+xml">
+    <link rel="stylesheet" type="text/css" href="/stylesheets/default.css">
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <meta charset="UTF-8">
+    <title>A few git tips you didn&#39;t know about</title>
+    
+    <meta name="description" content="Some hidden gems of git version control">
+    
+    <meta name=author lang=hr content="Mislav Marohnić">
+    <meta content='initial-scale=1.0' name='viewport'>
+    <link rel="icon" href="/favicon.ico">
+
+    
+    <style type="text/css" media="screen">pre.ansi {
+  color: #D7DFDA; background-color: #222;
+  padding: 1em 1.2em 1em 10px; font-size: 90%;
+}
+pre.ansi .ansi-33 { color: #ACA41F; }
+pre.ansi .ansi-1-36 { color: #14F0F0; }
+pre.ansi .ansi-1-33 { color: #EAEC23; }
+pre.ansi .ansi-1-31, pre.ansi .ansi-31 { color: #F9391F; }
+pre.ansi .ansi-1-32, pre.ansi .ansi-32 { color: #31E722; }
+</style>
+    
+  </head>
+  
+  <body>
+    <article class=hentry>
+
+<header>
+
+<h1 class=entry-title>A few git tips you didn't know about</h1>
+
+
+<p class="byline author vcard instapaper_ignore entry-unrelated">
+  
+  By <a href="/" rel=author class=fn lang=hr>Mislav Marohnić</a>
+  
+  
+  on <time class=updated datetime="2010-07-23T00:00:00-04:00" pubdate>23 Jul 2010</time>
+  
+</p>
+</header>
+
+<div id="post" class="entry-content">
+  <p><em>Notice: some of these commands or flags require git version <strong>1.7.2</strong>.<br>
+On OS X, upgrade easily with <a href="http://mxcl.github.com/homebrew/" title="The missing package manager for OS X">Homebrew</a>: <code>brew install git</code></em></p>
+
+<h2>Show branches, tags in git log</h2>
+
+<pre><code>$ git log --oneline --decorate
+</code></pre>
+
+<pre class='ansi'><span class='ansi-33'>7466000 (</span><span class='ansi-1-36'>HEAD</span><span class='ansi-33'>, </span><span class='ansi-1-31'>mislav/master</span><span class='ansi-33'>, </span><span class='ansi-1-32'>mislav</span><span class='ansi-33'>)</span> fix test that fails if current dir is not &quot;hub&quot;
+<span class='ansi-33'>494a414</span> fix cherry-pick of a commit URL
+<span class='ansi-33'>4277848 (</span><span class='ansi-1-31'>origin/master</span><span class='ansi-33'>, </span><span class='ansi-1-31'>origin/HEAD</span><span class='ansi-33'>, </span><span class='ansi-1-32'>master</span><span class='ansi-33'>)</span> whoops
+<span class='ansi-33'>d270fae</span> bugfix: git init -g
+<span class='ansi-33'>9307af3</span> test deps
+<span class='ansi-33'>8ccc17e</span> http://github.com/defunkt/hub/contributors
+<span class='ansi-33'>64bb19c</span> bugfix: variable name
+<span class='ansi-33'>546726a</span> dont need you
+<span class='ansi-33'>3a8d7af (</span><span class='ansi-1-33'>tag: v1.3.1</span><span class='ansi-33'>)</span> v1.3.1
+<span class='ansi-33'>197f429 (</span><span class='ansi-1-33'>tag: v1.3.0</span><span class='ansi-33'>)</span> v1.3.0
+<span class='ansi-33'>a1e1a50</span> not important
+<span class='ansi-33'>3c6af16</span> magic `cherry-pick` supports GitHub commit URLs and &quot;user@sha&quot; notation
+</pre>
+
+
+<h2>Diff by highlighting inline word changes instead of whole lines</h2>
+
+<pre><code>$ git diff --word-diff
+</code></pre>
+
+<pre class='ansi'># Returns a Boolean.
+def command?(name)
+  `type -t <span class='ansi-31'>[-#{command}`-]</span><span class='ansi-32'>{+#{name}`+}</span>
+  $?.success?
+end
+</pre>
+
+
+<p>This flag works with other git commands that take diff flags such as <code>git log -p</code> and <code>git show</code>.</p>
+
+<h2>Short status output</h2>
+
+<pre><code>$ git status -sb
+
+## thibaudgg...thibaudgg/master [ahead 1, behind 2]
+ M ext/fsevent/fsevent_watch.c
+?? Makefile
+?? SCEvents/
+?? bin/fsevent_watch
+</code></pre>
+
+<p>The default, verbose <code>status</code> output is fine for beginners, but once you get proficient with git there is no need for it. Since I check the status often, I want it to be as concise as possible.</p>
+
+<h2>Push a branch and automatically set tracking</h2>
+
+<pre><code>$ git push -u origin master
+
+# pushes the "master" branch to "origin" remote and sets up tracking
+</code></pre>
+
+<p>&ldquo;Tracking&rdquo; is essentially a link between a local and remote branch. When working on a local branch that tracks some other branch, you can <code>git pull</code> and <code>git push</code> without any extra arguments and git will know what to do.</p>
+
+<p>However, <code>git push</code> will by default push all branches that have the same name on the remote. To limit this behavior to just the current branch, set this configuration option:</p>
+
+<pre><code>$ git config --global push.default tracking
+</code></pre>
+
+<p>This is to prevent accidental pushes to branches which you&rsquo;re not ready to push yet.</p>
+
+<h2>Easily track a remote branch from someone else</h2>
+
+<pre><code>$ git checkout -t origin/feature
+
+# creates and checks out "feature" branch that tracks "origin/feature"
+</code></pre>
+
+<p>Once your teammate has shared a branch he or she was working on, you need to create a local branch for yourself if you intend to make changes to it. This does that and sets up tracking so that you can just <code>git push</code> after making changes.</p>
+
+<h2>Checkout a branch, rebase and merge to master</h2>
+
+<pre><code># on branch "master":
+$ git checkout feature &amp;&amp; git rebase @{-1} &amp;&amp; git checkout @{-2} &amp;&amp; git merge @{-1}
+
+# rebases "feature" to "master" and merges it in to master
+</code></pre>
+
+<p>The special &ldquo;@{-n}&rdquo; syntax means &ldquo;n-th branch checked out before current one&rdquo;. When we checkout &ldquo;feature&rdquo;, &ldquo;@{-1}&rdquo; is a reference to &ldquo;master&rdquo;. After rebasing, we need to use &ldquo;@{-2}&rdquo; to checkout master because &ldquo;@{-1}&rdquo; is a reference to the same branch (&ldquo;feature&rdquo;) due to how rebasing works internally.</p>
+
+<p><ins><strong>Update:</strong> Björn Steinbrink points out that this can be done in just 2 commands:</ins></p>
+
+<pre><code>$ git rebase HEAD feature &amp;&amp; git rebase HEAD @{-2}
+</code></pre>
+
+<h2>Pull with rebase instead of merge</h2>
+
+<pre><code>$ git pull --rebase
+
+# e.g. if on branch "master": performs a `git fetch origin`,
+# then `git rebase origin/master`
+</code></pre>
+
+<p>Because branch merges in git are recorded with a merge commit, they are supposed to be meaningful—for example, to indicate when a feature has been merged to a release branch. However, during a regular daily workflow where several team members sync a single branch often, the timeline gets polluted with unnecessary micro-merges on regular <code>git pull</code>. Rebasing ensures that the commits are always re-applied so that the history stays linear.</p>
+
+<p>You can configure certain branches to always do this without the <code>--rebase</code> flag:</p>
+
+<pre><code># make `git pull` on master always use rebase
+$ git config branch.master.rebase true
+</code></pre>
+
+<p>You can also set up a global option to set the last property for every new tracked branch:</p>
+
+<pre><code># setup rebase for every tracking branch
+$ git config --global branch.autosetuprebase always
+</code></pre>
+
+<h2>Find out if a change is part of a release</h2>
+
+<pre><code>$ git name-rev --name-only 50f3754
+
+"tags/v2.3.8~6"
+</code></pre>
+
+<p>It&rsquo;s not rare that you know a SHA-1 of a commit but aren&rsquo;t sure where is it located in project&rsquo;s history. If you&rsquo;re like me, you probably want to know was that change a part of some release or not. You can use <code>git show</code> to see the commit message, date and the full diff, but this doesn&rsquo;t help us much—especially since comparing commit dates in a project&rsquo;s history doesn&rsquo;t necessarily correspond to the order in which they were applied.</p>
+
+<p>The <code>name-rev</code> command can tell us the position of a commit relative to tags in the project. The example above is from the Ruby on Rails project. This tells us that this commit is located 6 commits before &ldquo;v2.3.8&rdquo; was tagged—we can be certain that this change is now part of Rails 2.3.8, then.</p>
+
+<p>The command goes even further in its usefulness. Suppose you follow a discussion in which someone mentions a few commits:</p>
+
+<blockquote><p>This bug was introduced in e6cadd422b72ba9818cc2f3b22243a6aa754c9f8 but fixed in 50f3754525c61e3ea84a407eb571617f2f39d6fe, if I recall correctly.</p></blockquote>
+
+<p>You can copy that to clipboard and pipe the comment to <code>git name-rev</code>, which will recognize commit SHAs and append tag information to each:</p>
+
+<pre><code>$ pbpaste | git name-rev --stdin
+
+"This bug was introduced in e6cadd422b72ba9818cc2f3b22243a6aa754c9f8 (tags/v2.3.6~215)
+but fixed in 50f3754525c61e3ea84a407eb571617f2f39d6fe (tags/v2.3.8~6), if I recall
+correctly."
+</code></pre>
+
+<p><em>See also: <code>git help describe</code></em></p>
+
+<h2>Find out which branch contains a change</h2>
+
+<pre><code>$ git branch --contains 50f3754
+</code></pre>
+
+<p>This filters the lists of branches to only those which have the given commit among their ancestors. To also include remote tracking branches in the list, include the &ldquo;-a&rdquo; flag.</p>
+
+<h2>See which changes from a branch are already present upstream</h2>
+
+<pre><code># while on "feature" branch:
+$ git cherry -v master
+
++ 497034f2 Listener.new now accepts a hash of options
+- 2d0333ff cache the absolute images path for growl messages
++ e4406858 rename Listener#run to #start
+</code></pre>
+
+<p>The <code>cherry</code> command is useful to see which commits have been cherry-picked from a development branch to the stable branch, for instance. This command compares changes on the current (&ldquo;feature&rdquo;) branch to upstream (&ldquo;master&rdquo;) and indicates which are present on both with the &ldquo;-&rdquo; sign. Changes still missing from upstream are marked with &ldquo;+&rdquo;.</p>
+
+<h2>Show the last commit which message matches a regex</h2>
+
+<pre><code>$ git show :/fix
+# shows the last commit which has the word "fix" in its message
+
+$ git show :/^Merge
+# shows the last merge commit
+</code></pre>
+
+<h2>Fetch a group of remotes</h2>
+
+<pre><code>$ git config remotes.default 'origin mislav staging'
+$ git remote update
+
+# fetches remotes "origin", "mislav", and "staging"
+</code></pre>
+
+<p>You can define a default list of remotes to be fetched by the <code>remote update</code> command. These can be remotes from your teammates, trusted community members of an opensource project, or similar. You can also define a named group like so:</p>
+
+<pre><code>$ git config remotes.mygroup 'remote1 remote2 ...'
+$ git fetch mygroup
+</code></pre>
+
+<h2>Write commit notes</h2>
+
+<pre><code>$ git notes add
+# opens the editor to add a note to the last commit
+</code></pre>
+
+<p>Git notes are annotations for existing commits. They don&rsquo;t change the history, so you are free to add notes to any existing commits. Your notes are stored only in your repo, but it&rsquo;s possible to <a href="http://lists.zerezo.com/git/msg714256.html">share notes</a>. There are interesting ideas for <a href="http://lists-archives.org/git/709977-git-notes-notes.html">possible use-cases for notes</a>, too.</p>
+
+<h2>Install &ldquo;hub&rdquo;</h2>
+
+<p><a href="http://defunkt.io/hub/">Hub teaches git about GitHub</a>. If you&rsquo;re using repos from GitHub on a regular basis, you definitely want to install hub and save a lot of keystrokes—<em>especially</em> if you&rsquo;re involved in opensource.</p>
+
+<script type="text/javascript">
+    if (document.querySelectorAll) {
+        var blocks = document.querySelectorAll('pre code')
+        for (var i=0; i < blocks.length; i++) {
+            blocks[i].innerHTML = blocks[i].innerHTML.replace(/^#.+/gm, '<span class="comment">$&</span>')
+        }
+    }
+</script>
+
+
+
+
+</div>
+
+</article>
+
+<aside id="related">
+  
+  <h2>Also on this site</h2>
+  
+  <ol class="posts">
+    
+      
+      <li>
+        <span class="date">07 Feb 2014</span>
+        ▸ <a href="/2014/02/hidden-documentation/">Every line of code is always documented</a>
+      </li>
+      
+      
+    
+      
+      <li>
+        <span class="date">10 Dec 2013</span>
+        ▸ <a href="/2013/12/travis-cached-bundle/">Speeding up Travis CI builds</a>
+      </li>
+      
+      
+    
+      
+      <li>
+        <span class="date">28 Jul 2013</span>
+        ▸ <a href="/2013/07/ruby-openssl/">SSLError and Rubyist, sitting in a tree</a>
+      </li>
+      
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </ol>
+  
+  
+  <p>
+  You should <a href="http://twitter.com/mislav" rel="me">follow me on Twitter: @mislav</a>.
+  </p>
+  
+  <nav><a class="home" href="/blog/">← all posts</a></nav>
+</aside>
+
+
+<script type="text/javascript">
+if (/^mislav\.(uniqpath\.com|net)/.test(location.hostname)) (function() {
+  var t = document.createElement('script'); t.type = 'text/javascript'; t.async = true;
+  t.id = 'gauges-tracker'; t.setAttribute('data-site-id', '4e1d9163f5a1f56fd4000003');
+  t.src = '//secure.gaug.es/track.js';
+  var s = document.getElementsByTagName('script')[0];
+  s.parentNode.insertBefore(t, s);
+})();
+
+</script>
+  </body>
+</html>
