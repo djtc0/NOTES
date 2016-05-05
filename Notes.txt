@@ -14,3 +14,5 @@ Local/Auto Histotry for visual studio:
 !!! Super Tips:
 http://mislav.net/2010/07/git-tips/
 
+changed on branch2
+
