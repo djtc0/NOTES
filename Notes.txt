@@ -52,6 +52,9 @@ _______________
 
 git branch -a | grep remotes
 git branch -r
+
+**delete remote branch from local
+git push origin --delete brancheName
 ____________
 how to read git diff output
 {
