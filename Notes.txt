@@ -34,8 +34,6 @@ git ls-remote (branches and commits and relations)
 git remote show origin (somemore info check it out...)
 git ls-remote --heads origin (check it out)
 
-
-<<<<<<< HEAD
 ________
 Get list of commits reverse
 
@@ -45,10 +43,7 @@ git log --reverse
 Get first commits:
 
 git rev-list --max-parents=0 HEAD
-=======
-_______________
->>>>>>> f3d366df6e48670c4b168aad6578ddb918cbc3af
-
+____________
 
 git branch -a | grep remotes
 git branch -r
@@ -63,6 +58,11 @@ http://stackoverflow.com/questions/2529441/how-to-read-the-output-from-git-diff
 @@ from-file-range to-file-range @@ [header]
 from-file-range: -<start line>,<number of lines>
 }
+_________________
+MERGE
+
+git reset --hard HEAD~1 (undo last merge-commit)
+
 _________________________________________________
 2. ASP.NET
 
