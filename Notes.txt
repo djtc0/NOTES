@@ -1,3 +1,11 @@
+Index:
+	1. GIT
+	2. ASP.net
+
+_________________________________________________
+
+1. GIT!!!!
+
 Nice hofmannsven simply Git Cheatsheet
 
 https://gist.github.com/hofmannsven/6814451
@@ -40,3 +48,19 @@ git rev-list --max-parents=0 HEAD
 =======
 _______________
 >>>>>>> f3d366df6e48670c4b168aad6578ddb918cbc3af
+
+
+git branch -a | grep remotes
+git branch -r
+____________
+how to read git diff output
+{
+http://stackoverflow.com/questions/2529441/how-to-read-the-output-from-git-diff
+
+@@ from-file-range to-file-range @@ [header]
+from-file-range: -<start line>,<number of lines>
+}
+_________________________________________________
+2. ASP.NET
+
+Current.Items is per-request cache whereas Current.Session is per-session cache
