@@ -1,10 +1,7 @@
-Index:
-	1. GIT
-	2. ASP.net
 
-_________________________________________________
+GIT!!!!
 
-1. GIT!!!!
+*****LINKS:
 
 Nice hofmannsven simply Git Cheatsheet
 
@@ -22,6 +19,15 @@ Local/Auto Histotry for visual studio:
 !!! Super Tips:
 http://mislav.net/2010/07/git-tips/
 
+https://www.sitepoint.com/10-tips-git-next-level/
+
+https://stevebennett.me/2012/02/24/10-things-i-hate-about-git/
+
+https://randyfay.com/content/avoiding-git-disasters-gory-story
+
+https://svnvsgit.com/
+
+*****COMMANDS
 ___________________
 GIT branch tips
 
@@ -63,7 +69,3 @@ MERGE
 
 git reset --hard HEAD~1 (undo last merge-commit)
 
-_________________________________________________
-2. ASP.NET
-
-Current.Items is per-request cache whereas Current.Session is per-session cache
