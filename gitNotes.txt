@@ -69,3 +69,5 @@ MERGE
 
 git reset --hard HEAD~1 (undo last merge-commit)
 
+git merge --no-ff --no-commit branchname (merge current branch with branchname but keep changes in stage area)
+
