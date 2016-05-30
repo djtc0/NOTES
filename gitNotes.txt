@@ -32,6 +32,7 @@ ___________________
 GIT branch tips
 
 git branch -r (show remote branches)
+git branch -a | grep remotes
 git branch -a (show remote and local branches)
 
 git remote (list name of remotes)
@@ -40,19 +41,22 @@ git ls-remote (branches and commits and relations)
 git remote show origin (somemore info check it out...)
 git ls-remote --heads origin (check it out)
 
-________
-Get list of commits reverse
+#get list branches by last time in use (*1a)
+git for-each-ref --sort='-authordate:iso8601' --format=' %(authordate:
+relative)%09%(refname:short)' refs/heads
 
+________
+#Get list of commits reverse
 git log --reverse
 
 
-Get first commits:
-
+#Get first commits:
 git rev-list --max-parents=0 HEAD
+
+#get list of commits ordered by date with ranch
+git for-each-ref --sort=-committerdate refs/heads/
 ____________
 
-git branch -a | grep remotes
-git branch -r
 
 **delete remote branch from local
 git push origin --delete brancheName
