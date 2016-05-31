@@ -45,10 +45,14 @@ git ls-remote --heads origin (check it out)
 git for-each-ref --sort='-authordate:iso8601' --format=' %(authordate:
 relative)%09%(refname:short)' refs/heads
 
+
+git show-branch (nice graph of branches...)
+
 ________
 #Get list of commits reverse
 git log --reverse
 
+git log --oneline --graph --all --abbrev-commit
 
 #Get first commits:
 git rev-list --max-parents=0 HEAD
